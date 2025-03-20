@@ -1,0 +1,25 @@
+CREATE TABLE UsersRoles (
+    UserId INT NOT NULL,
+    Role NVARCHAR(50) NOT NULL CHECK (Role IN ('Admin', 'User')),
+    PRIMARY KEY (UserId, Role),
+    CONSTRAINT FK_UsersRoles_Users FOREIGN KEY (UserId) REFERENCES Users(Id) ON DELETE CASCADE
+);
+
+-- Ограничаване на достъпа: Само администраторите могат да управляват Users и Rooms
+CREATE FUNCTION dbo.CanManageUsersRooms(@UserId INT) 
+RETURNS BIT AS
+BEGIN
+    IF EXISTS (SELECT 1 FROM UsersRoles WHERE UserId = @UserId AND Role = 'Admin')
+        RETURN 1;
+    RETURN 0;
+END
+
+-- Освободените служители (IsActive = 0) нямат достъп
+CREATE FUNCTION dbo.CanLogin(@UserId INT)
+RETURNS BIT AS
+BEGIN
+    DECLARE @IsActive BIT;
+    SELECT @IsActive = IsActive FROM Users WHERE Id = @UserId;
+    IF @IsActive = 1 RETURN 1;
+    RETURN 0;
+END
