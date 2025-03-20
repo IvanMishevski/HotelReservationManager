@@ -1,7 +1,0 @@
-CREATE TABLE ReservationClients (
-    ReservationId INT NOT NULL,
-    ClientId INT NOT NULL,
-    PRIMARY KEY (ReservationId, ClientId),
-    CONSTRAINT FK_ReservationClients_Reservations FOREIGN KEY (ReservationId) REFERENCES Reservations(Id) ON DELETE CASCADE,
-    CONSTRAINT FK_ReservationClients_Clients FOREIGN KEY (ClientId) REFERENCES Clients(Id) ON DELETE CASCADE
-);
