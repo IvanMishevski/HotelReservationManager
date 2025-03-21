@@ -1,32 +1,34 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotelReservationManager.Models
 {
     public class Client
     {
-        
-            [Key]
-            [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-            public int Id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
-            [Required]
-            [StringLength(50)]
-            public string FirstName { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string FirstName { get; set; }
 
-            [Required]
-            [StringLength(50)]
-            public string LastName { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string LastName { get; set; }
 
-            [Required]
-            [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be 10 digits.")]
-            public string PhoneNumber { get; set; }
+        [Required]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be 10 digits.")]
+        public string PhoneNumber { get; set; }
 
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
 
-            [Required]
-            public bool IsAdult { get; set; }
+        [Required]
+        public bool IsAdult { get; set; }
+
+        public virtual ICollection<ReservationClient> ReservationClients { get; set; }
     }
-}
