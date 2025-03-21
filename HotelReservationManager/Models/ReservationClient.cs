@@ -1,12 +1,20 @@
- public class ReservationClient
-    {
-        [Required]
-        [ForeignKey("Reservation")]
-        public int ReservationId { get; set; }
-        public Reservation Reservation { get; set; }
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-        [Required]
-        [ForeignKey("Client")]
+namespace HotelReservationManager.Models
+{
+    public class ReservationClient
+    {
+        [Key]
+        public int ReservationId { get; set; }
+
+        [ForeignKey("ReservationId")]
+        public virtual Reservation Reservation { get; set; }
+
+        [Key]
         public int ClientId { get; set; }
-        public Client Client { get; set; }
+
+        [ForeignKey("ClientId")]
+        public virtual Client Client { get; set; }
     }
+}
