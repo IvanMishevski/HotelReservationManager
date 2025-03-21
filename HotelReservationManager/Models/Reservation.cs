@@ -1,10 +1,4 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace HotelReservationManager.Models
-{
-    public class Reservation
+public class Reservation
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -37,5 +31,6 @@ namespace HotelReservationManager.Models
         [Required]
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalPrice { get; set; }
+
+        public virtual ICollection<ReservationClient> ReservationClients { get; set; }
     }
-}
