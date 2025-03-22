@@ -32,3 +32,4 @@ namespace HotelReservationManager.Models
 
         public virtual ICollection<ReservationClient> ReservationClients { get; set; }
     }
+}
