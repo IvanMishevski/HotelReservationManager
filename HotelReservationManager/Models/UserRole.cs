@@ -1,17 +1,19 @@
 using HotelReservationManager.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-
-public class UserRole
+namespace HotelReservationManager.Models
 {
-    [Key, Column(Order = 0)]
-    public int UserId { get; set; }
+    public class UserRole
+    {
+        [Key, Column(Order = 0)]
+        public int UserId { get; set; }
 
-    [ForeignKey("UserId")]
-    public virtual User User { get; set; }
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; }
 
-    [Key, Column(Order = 1)]
-    [Required]
-    [StringLength(10)]
-    public string Role { get; set; } // "Admin" or "User"
+        [Key, Column(Order = 1)]
+        [Required]
+        [StringLength(10)]
+        public string Role { get; set; } // "Admin" or "User"
+    }
 }
