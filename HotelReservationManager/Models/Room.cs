@@ -1,33 +1,33 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotelReservationManager.Models
 {
     public class Room
     {
-         [Key]
-            [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-            public int Id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
-            [Required]
-            public int Capacity { get; set; }
+        [Required]
+        public int Capacity { get; set; }
 
-            [Required]
-            [StringLength(100)]
-            public string Type { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string RoomType { get; set; }
 
-            [Required]
-            public bool IsAvailable { get; set; }
+        public bool IsAvailable { get; set; }
 
-            [Required]
-            [Column(TypeName = "decimal(18,2)")]
-            public decimal PricePerAdult { get; set; }
+        [Required]
+        [Range(0, double.MaxValue, ErrorMessage = "Price must be a positive value.")]
+        public decimal PriceForAdult { get; set; }
 
-            [Required]
-            [Column(TypeName = "decimal(18,2)")]
-            public decimal PricePerChild { get; set; }
+        [Required]
+        [Range(0, double.MaxValue, ErrorMessage = "Price must be a positive value.")]
+        public decimal PriceForChild { get; set; }
 
-            [Required]
-            public int RoomNumber { get; set; }
+        [Required]
+        public int RoomNumber { get; set; }
     }
 }
