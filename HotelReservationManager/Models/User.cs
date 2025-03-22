@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,26 +15,27 @@ namespace HotelReservationManager.Models
         public string Username { get; set; }
 
         [Required]
-        public string PasswordHash { get; set; }
+        [StringLength(100)]
+        public string Password { get; set; }
 
         [Required]
         [StringLength(50)]
         public string FirstName { get; set; }
 
+        [Required]
         [StringLength(50)]
-        public string MiddleName { get; set; }
+        public string FatherName { get; set; }
 
         [Required]
         [StringLength(50)]
         public string LastName { get; set; }
 
         [Required]
-        [StringLength(10)]
-        public string EGN { get; set; }
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "EGN must be 10 digits.")]
+        public string Egn { get; set; }
 
         [Required]
         [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be 10 digits.")]
-
         public string PhoneNumber { get; set; }
 
         [Required]
@@ -42,11 +43,10 @@ namespace HotelReservationManager.Models
         public string Email { get; set; }
 
         [Required]
-        public DateTime HireDate { get; set; }
+        public DateTime DateOfHire { get; set; }
 
-        [Required]
         public bool IsActive { get; set; }
 
-        public DateTime? TerminationDate { get; set; }
+        public DateTime? DateOfRelease { get; set; }
     }
 }
