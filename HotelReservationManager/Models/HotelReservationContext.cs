@@ -7,6 +7,7 @@ namespace HotelReservationManager.Models
 {
     public class HotelReservationContext : DbContext
     {
+        
         public HotelReservationContext(DbContextOptions<HotelReservationContext> options)
             : base(options)
         { }
@@ -29,13 +30,25 @@ namespace HotelReservationManager.Models
 
             modelBuilder.Entity<ReservationClient>()
                 .HasOne(rc => rc.Reservation)
-                .WithMany()
+                .WithMany(r => r.ReservationClients)
                 .HasForeignKey(rc => rc.ReservationId);
 
             modelBuilder.Entity<ReservationClient>()
                 .HasOne(rc => rc.Client)
-                .WithMany()
+                .WithMany(c => c.ReservationClients)
                 .HasForeignKey(rc => rc.ClientId);
+
+            modelBuilder.Entity<Room>()
+                .Property(r => r.PriceForAdult)
+                .HasColumnType("decimal(18,2)");
+
+            modelBuilder.Entity<Room>()
+                .Property(r => r.PriceForChild)
+                .HasColumnType("decimal(18,2)");
+
+            modelBuilder.Entity<Reservation>()
+                .Property(r => r.AmountDue)
+                .HasColumnType("decimal(18,2)");
 
             // UserRole primary key
             modelBuilder.Entity<UserRole>()
@@ -45,6 +58,10 @@ namespace HotelReservationManager.Models
                 .HasOne(ur => ur.User)
                 .WithMany()
                 .HasForeignKey(ur => ur.UserId);
+
+            modelBuilder.Entity<User>()
+               .Property(u => u.DateOfHire)
+               .HasDefaultValueSql("GETDATE()");
 
             // Seed Data
 
@@ -56,8 +73,8 @@ namespace HotelReservationManager.Models
             );
 
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Username = "admin", Password = "admin123", FirstName = "Ivan", FatherName = "Petkov", LastName = "Ivanov", Egn = "1234567890", PhoneNumber = "0871234567", Email = "ivan.ivanov@example.com", DateOfHire = DateTime.Now, IsActive = true },
-                new User { Id = 2, Username = "employee", Password = "emp1234", FirstName = "Maria", FatherName = "Ivanova", LastName = "Petrova", Egn = "0987654321", PhoneNumber = "0898765432", Email = "maria.petrova@example.com", DateOfHire = DateTime.Now, IsActive = true }
+                new User { Id = 1, Username = "admin", Password = "admin123", FirstName = "Ivan", FatherName = "Petkov", LastName = "Ivanov", Egn = "1234567890", PhoneNumber = "0871234567", Email = "ivan.ivanov@example.com", DateOfHire = DateTime.Parse("2025-03-23"), IsActive = true },
+                new User { Id = 2, Username = "employee", Password = "emp1234", FirstName = "Maria", FatherName = "Ivanova", LastName = "Petrova", Egn = "0987654321", PhoneNumber = "0898765432", Email = "maria.petrova@example.com", DateOfHire = DateTime.Parse("2025-03-23"), IsActive = true }
             );
 
             modelBuilder.Entity<Client>().HasData(
@@ -66,8 +83,8 @@ namespace HotelReservationManager.Models
             );
 
             modelBuilder.Entity<Reservation>().HasData(
-                new Reservation { Id = 1, RoomId = 1, UserId = 1, CheckInDate = DateTime.Now.AddDays(1), CheckOutDate = DateTime.Now.AddDays(3), IsBreakfastIncluded = true, IsAllInclusive = false, AmountDue = 50 * 2 },
-                new Reservation { Id = 2, RoomId = 2, UserId = 2, CheckInDate = DateTime.Now.AddDays(2), CheckOutDate = DateTime.Now.AddDays(4), IsBreakfastIncluded = true, IsAllInclusive = true, AmountDue = 120 * 4 }
+                new Reservation { Id = 1, RoomId = 1, UserId = 1, CheckInDate = DateTime.Parse("2025-03-24"), CheckOutDate = DateTime.Parse("2025-03-26"), IsBreakfastIncluded = true, IsAllInclusive = false, AmountDue = 50 * 2 },
+                new Reservation { Id = 2, RoomId = 2, UserId = 2, CheckInDate = DateTime.Parse("2025-03-25"), CheckOutDate = DateTime.Parse("2025-03-27"), IsBreakfastIncluded = true, IsAllInclusive = true, AmountDue = 120 * 4 }
             );
 
             modelBuilder.Entity<ReservationClient>().HasData(
