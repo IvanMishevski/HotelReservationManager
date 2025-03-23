@@ -11,18 +11,19 @@ namespace HotelReservationManager.Models
             : base(options)
         { }
 
-        // DbSet за всяка таблица
+        // DbSet for each table
         public DbSet<User> Users { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ReservationClient> ReservationClients { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // За свързване между резервации и клиенти (много към много)
+            // Many-to-many relationship between reservations and clients
             modelBuilder.Entity<ReservationClient>()
                 .HasKey(rc => new { rc.ReservationId, rc.ClientId });
 
@@ -36,23 +37,32 @@ namespace HotelReservationManager.Models
                 .WithMany()
                 .HasForeignKey(rc => rc.ClientId);
 
+            // UserRole primary key
+            modelBuilder.Entity<UserRole>()
+                .HasKey(ur => new { ur.UserId, ur.Role });
+
+            modelBuilder.Entity<UserRole>()
+                .HasOne(ur => ur.User)
+                .WithMany()
+                .HasForeignKey(ur => ur.UserId);
+
             // Seed Data
 
             modelBuilder.Entity<Room>().HasData(
-                new Room { Id = 1, RoomNumber = 101, Capacity = 2, RoomType = "Двойна стая", IsAvailable = true, PriceForAdult = 50, PriceForChild = 30 },
-                new Room { Id = 2, RoomNumber = 102, Capacity = 4, RoomType = "Апартамент", IsAvailable = true, PriceForAdult = 120, PriceForChild = 60 },
-                new Room { Id = 3, RoomNumber = 103, Capacity = 2, RoomType = "Стая с двойно легло", IsAvailable = true, PriceForAdult = 75, PriceForChild = 40 },
-                new Room { Id = 4, RoomNumber = 104, Capacity = 1, RoomType = "Пентхаус", IsAvailable = true, PriceForAdult = 200, PriceForChild = 100 }
+                new Room { Id = 1, RoomNumber = 101, Capacity = 2, RoomType = "Double Room", IsAvailable = true, PriceForAdult = 50, PriceForChild = 30 },
+                new Room { Id = 2, RoomNumber = 102, Capacity = 4, RoomType = "Apartment", IsAvailable = true, PriceForAdult = 120, PriceForChild = 60 },
+                new Room { Id = 3, RoomNumber = 103, Capacity = 2, RoomType = "Room with Double Bed", IsAvailable = true, PriceForAdult = 75, PriceForChild = 40 },
+                new Room { Id = 4, RoomNumber = 104, Capacity = 1, RoomType = "Penthouse", IsAvailable = true, PriceForAdult = 200, PriceForChild = 100 }
             );
 
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Username = "admin", Password = "admin123", FirstName = "Иван", FatherName = "Петков", LastName = "Иванов", Egn = "1234567890", PhoneNumber = "0871234567", Email = "ivan.ivanov@example.com", DateOfHire = DateTime.Now, IsActive = true },
-                new User { Id = 2, Username = "employee", Password = "emp1234", FirstName = "Мария", FatherName = "Иванова", LastName = "Петрова", Egn = "0987654321", PhoneNumber = "0898765432", Email = "maria.petrova@example.com", DateOfHire = DateTime.Now, IsActive = true }
+                new User { Id = 1, Username = "admin", Password = "admin123", FirstName = "Ivan", FatherName = "Petkov", LastName = "Ivanov", Egn = "1234567890", PhoneNumber = "0871234567", Email = "ivan.ivanov@example.com", DateOfHire = DateTime.Now, IsActive = true },
+                new User { Id = 2, Username = "employee", Password = "emp1234", FirstName = "Maria", FatherName = "Ivanova", LastName = "Petrova", Egn = "0987654321", PhoneNumber = "0898765432", Email = "maria.petrova@example.com", DateOfHire = DateTime.Now, IsActive = true }
             );
 
             modelBuilder.Entity<Client>().HasData(
-                new Client { Id = 1, FirstName = "Александър", LastName = "Атанасов", PhoneNumber = "0876543210", Email = "alex.atanasov@example.com", IsAdult = true },
-                new Client { Id = 2, FirstName = "Стефка", LastName = "Димитрова", PhoneNumber = "0896543210", Email = "stefka.dimitrova@example.com", IsAdult = true }
+                new Client { Id = 1, FirstName = "Alexander", LastName = "Atanasov", PhoneNumber = "0876543210", Email = "alex.atanasov@example.com", IsAdult = true },
+                new Client { Id = 2, FirstName = "Stefka", LastName = "Dimitrova", PhoneNumber = "0896543210", Email = "stefka.dimitrova@example.com", IsAdult = true }
             );
 
             modelBuilder.Entity<Reservation>().HasData(
