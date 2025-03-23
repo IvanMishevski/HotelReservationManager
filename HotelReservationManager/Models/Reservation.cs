@@ -22,7 +22,7 @@ namespace HotelReservationManager.Models
         [ForeignKey("UserId")]
         public User User { get; set; }
 
-        public string ClientList { get; set; } // List of clients (can be stored as a string or a separate table)
+        public List<ReservationClient> ReservationClients { get; set; } = new();
 
         [Required]
         public DateTime CheckInDate { get; set; }
@@ -36,6 +36,7 @@ namespace HotelReservationManager.Models
         public bool IsAllInclusive { get; set; }
 
         [Required]
+        [Column(TypeName = "decimal(18,2)")] 
         public decimal AmountDue { get; set; }
     }
 
