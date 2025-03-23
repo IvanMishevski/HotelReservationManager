@@ -5,16 +5,10 @@ namespace HotelReservationManager.Models
 {
     public class ReservationClient
     {
-        [Key]
         public int ReservationId { get; set; }
+        public Reservation Reservation { get; set; }
 
-        [ForeignKey("ReservationId")]
-        public virtual Reservation Reservation { get; set; }
-
-        [Key]
         public int ClientId { get; set; }
-
-        [ForeignKey("ClientId")]
-        public virtual Client Client { get; set; }
+        public Client Client { get; set; }
     }
 }
