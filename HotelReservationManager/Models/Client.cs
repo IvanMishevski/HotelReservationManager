@@ -30,6 +30,6 @@ namespace HotelReservationManager.Models
         [Required]
         public bool IsAdult { get; set; }
 
-        public virtual ICollection<ReservationClient> ReservationClients { get; set; }
+        public List<ReservationClient> ReservationClients { get; set; } = new();
     }
 }
