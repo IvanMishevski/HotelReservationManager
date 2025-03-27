@@ -1,8 +1,202 @@
-﻿@{
+@model IEnumerable<HotelReservationManager.Models.Room>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: 'Lora', serif;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+    }
+
+    .navbar {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 50px;
+        background: rgba(34, 49, 63, 0.9);
+        color: white;
+        z-index: 1000;
+    }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+            .navbar a:hover {
+                color: #f39c12;
+            }
+
+    /* Hero Section */
+    .hero {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        background: url('https://files.oaiusercontent.com/file-A576kmF9gMcBBrnMhbXh2P?se=2025-03-27T14%3A36%3A09Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D8b52a6fe-9212-46c6-8eb6-3c045da955a9.webp&sig=Hc2CPjOE8lG9g2PVwXHzjPiKIf5zx/WOe4Ec62Q2TvY%3D') no-repeat center center/cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+        margin-top: 80px; 
+    }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.8);
+            margin-bottom: 60%;
+        }
+
+    /* Services Section */
+    .services {
+        text-align: center;
+        padding: 60px 10%;
+        background: #ecf0f1;
+        width: 100%;
+    }
+
+    .service-card {
+        display: inline-block;
+        width: 22%;
+        margin: 15px;
+        padding: 25px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0px 5px 10px rgba(0,0,0,0.15);
+        transition: transform 0.3s ease;
+    }
+
+        .service-card:hover {
+            transform: scale(1.05);
+        }
+
+        .service-card img {
+            width: 80px; 
+            height: auto; 
+            margin-bottom: 20px;
+        }
+
+    /* Contact Section */
+    .contact-section {
+        background: #d5dbdb;
+        padding: 50px;
+        text-align: center;
+        width: 100%;
+    }
+
+        .contact-section .info {
+            display: inline-block;
+            width: 30%;
+            margin: 20px;
+        }
+
+    footer {
+        text-align: center;
+        background: #2c3e50;
+        color: white;
+        padding: 15px;
+        font-size: 1rem;
+    }
+
+    /* Media Queries */
+    @@media (max-width: 768px) {
+        .service-card
+
+    {
+        width: 45%;
+    }
+
+    .contact-section .info {
+        width: 80%;
+        display: block;
+        margin: auto;
+        margin-bottom: 20px;
+    }
+
+    }
+
+    @@media (max-width: 480px) {
+        .service-card
+
+    {
+        width: 100%;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+</style>
+
+
+<!-- Hero Section -->
+<div class="hero">
+    <h1>Great Choice Of Hotels</h1>
 </div>
+
+<!-- Services Section -->
+<div class="services">
+    <h2>Services</h2>
+    <div class="service-card">
+        <img src="https://plus.unsplash.com/premium_photo-1682310071124-33632135b2ee?q=80&w=2112&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Tour & Excursions">
+        <h3>Tour & Excursions</h3>
+        <p>Vehicles available for tour and travels.</p>
+    </div>
+    <div class="service-card">
+        <img src="https://plus.unsplash.com/premium_photo-1677486394561-6e660bc9879e?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Free WiFi">
+        <h3>Free Wireless Internet Access</h3>
+        <p>Available in all hotel areas.</p>
+    </div>
+    <div class="service-card">
+        <img src="https://plus.unsplash.com/premium_photo-1664910536718-7497814a30df?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Babysitting">
+        <h3>Babysitting On Request</h3>
+        <p>Professional babysitting services.</p>
+    </div>
+    <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1604335398980-ededcadcc37d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Laundry Service">
+        <h3>Laundry Service</h3>
+        <p>Free laundry service for premium guests.</p>
+    </div>
+</div>
+
+<!-- Contact Section -->
+<div class="contact-section">
+    <h2>Get In Touch</h2>
+    <div class="info">
+        <h3>Address</h3>
+        <p>D-204, Hole Town, South West, Delhi-110096, India</p>
+    </div>
+    <div class="info">
+        <h3>Sales</h3>
+        <p>Telephone: +85236121326</p>
+        <p>Email: info@gmail.com</p>
+    </div>
+    <div class="info">
+        <h3>About Us</h3>
+        <p>We have 72 comfortable rooms, including suites for premium guests.</p>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    Hotel Booking Management System © 2024
+</footer>
