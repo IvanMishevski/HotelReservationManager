@@ -17,7 +17,7 @@ namespace HotelReservationManager.Models
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ReservationClient> ReservationClients { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -50,17 +50,7 @@ namespace HotelReservationManager.Models
                 .HasColumnType("decimal(18,2)");
 
             // UserRole primary key
-            modelBuilder.Entity<UserRole>()
-                .HasKey(ur => new { ur.UserId, ur.Role });
-
-            modelBuilder.Entity<UserRole>()
-                .HasOne(ur => ur.User)
-                .WithMany()
-                .HasForeignKey(ur => ur.UserId);
-
-            modelBuilder.Entity<User>()
-                .Property(u => u.DateOfHire)
-                .HasDefaultValueSql("GETDATE()");
+  
 
             // Seed Data
 
@@ -71,10 +61,6 @@ namespace HotelReservationManager.Models
                 new Room { Id = 4, RoomNumber = 104, Capacity = 1, RoomType = "Penthouse", IsAvailable = true, PriceForAdult = 200, PriceForChild = 100, ImageUrl = "https://www.paranych.com/uploads/benefits-penthouse-living-main-image.png" }
             );
 
-            modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Username = "admin", Password = "admin123", FirstName = "Ivan", FatherName = "Petkov", LastName = "Ivanov", Egn = "1234567890", PhoneNumber = "0871234567", Email = "ivan.ivanov@example.com", DateOfHire = DateTime.Parse("2025-03-23"), IsActive = true },
-                new User { Id = 2, Username = "employee", Password = "emp1234", FirstName = "Maria", FatherName = "Ivanova", LastName = "Petrova", Egn = "0987654321", PhoneNumber = "0898765432", Email = "maria.petrova@example.com", DateOfHire = DateTime.Parse("2025-03-23"), IsActive = true }
-            );
 
             modelBuilder.Entity<Client>().HasData(
                 new Client { Id = 1, FirstName = "Alexander", LastName = "Atanasov", PhoneNumber = "0876543210", Email = "alex.atanasov@example.com", IsAdult = true },
