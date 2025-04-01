@@ -1,0 +1,163 @@
+@{
+    ViewData["Title"] = "About Us";
+}
+
+<style>
+    body, html {
+        font-family: 'Lora', serif;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+    }
+
+    .navbar {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 50px;
+        background: rgba(34, 49, 63, 0.9);
+        color: white;
+        z-index: 1000;
+    }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+            .navbar a:hover {
+                color: #f39c12;
+            }
+    .hero {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        background: url('https://sdmntpritalynorth.oaiusercontent.com/files/00000000-6288-5246-87f0-4010171794af/raw?se=2025-04-01T07%3A49%3A24Z&sp=r&sv=2024-08-04&sr=b&scid=748b3b75-56b6-50fc-9bfb-8e8a561c19b9&skoid=54ae6e2b-352e-4235-bc96-afa2512cc978&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-03-31T13%3A58%3A41Z&ske=2025-04-01T13%3A58%3A41Z&sks=b&skv=2024-08-04&sig=O1c4tr9q0XRVW9ZZV37/Y5J0zGaAVsXB/ehYwVZcEUM%3D') no-repeat center center/cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+        margin-top: 80px;
+    }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.8);
+        }
+
+    .about-section {
+        text-align: center;
+        padding: 60px 10%;
+        background: #ecf0f1;
+        width: 100%;
+    }
+
+    .about-content {
+        max-width: 900px;
+        margin: auto;
+        font-size: 1.2rem;
+        line-height: 1.8;
+    }
+
+    .features {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+    }
+
+    .feature-card {
+        width: 30%;
+        padding: 25px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0px 5px 10px rgba(0,0,0,0.15);
+        transition: transform 0.3s ease;
+        text-align: center;
+    }
+
+        .feature-card:hover {
+            transform: scale(1.05);
+        }
+
+        .feature-card img {
+            width: 80px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+    footer {
+        text-align: center;
+        background: #2c3e50;
+        color: white;
+        padding: 15px;
+        font-size: 1rem;
+    }
+
+    @@media (max-width: 768px) {
+        .feature-card
+
+    {
+        width: 45%;
+    }
+
+    }
+
+    @@media (max-width: 480px) {
+        .feature-card
+
+    {
+        width: 100%;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="hero">
+  
+</div>
+
+<!-- About Section -->
+<div class="about-section">
+    <h2>Who We Are</h2>
+    <div class="about-content">
+        <p>Our hotel offers premium accommodations, exceptional services, and a seamless booking experience. We ensure that every guest enjoys a luxurious stay with modern amenities, comfortable rooms, and outstanding hospitality.</p>
+        <p>Through our <strong>Hotel Manager Reservation System</strong>, we provide an efficient and secure way for guests to book rooms, manage reservations, and customize their stay effortlessly.</p>
+    </div>
+
+    <!-- Features -->
+    <div class="features">
+        <div class="feature-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828673.png" alt="Fast Booking">
+            <h3>Easy & Fast Booking</h3>
+            <p>Reserve your room in just a few clicks with our smart booking system.</p>
+        </div>
+        <div class="feature-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/3050/3050570.png" alt="Luxury Rooms">
+            <h3>Luxury Accommodations</h3>
+            <p>Choose from a variety of deluxe rooms and suites with top-tier amenities.</p>
+        </div>
+        <div class="feature-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/1680/1680490.png" alt="24/7 Support">
+            <h3>24/7 Customer Support</h3>
+            <p>Our team is always available to assist with reservations and inquiries.</p>
+        </div>
+    </div>
+</div>
+
+
