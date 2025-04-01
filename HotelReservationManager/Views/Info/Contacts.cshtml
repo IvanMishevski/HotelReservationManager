@@ -1,0 +1,152 @@
+@{
+    ViewData["Title"] = "Contact Us";
+}
+<style>
+    body, html {
+        margin-top:40px;
+        padding: 0;
+        font-family: 'Lora', serif;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+    }
+
+    .navbar {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 50px;
+        background: rgba(34, 49, 63, 0.9);
+        color: white;
+        z-index: 1000;
+    }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+            .navbar a:hover {
+                color: #f39c12;
+            }
+    .contact-section {
+        background: url('https://source.unsplash.com/1600x900/?hotel,luxury') no-repeat center center/cover;
+        color: white;
+        padding: 80px 10%;
+        text-align: center;
+        position: relative;
+    }
+
+        .contact-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .contact-section h2,
+        .contact-section .info {
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-section h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+        }
+
+        .contact-section .info {
+            display: inline-block;
+            width: 30%;
+            margin: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+            .contact-section .info:hover {
+                transform: scale(1.05);
+            }
+
+            .contact-section .info h3 {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+            }
+
+            .contact-section .info p {
+                font-size: 1.2rem;
+            }
+    /* Social Media Block */
+    .social-media {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+
+            .social-icons a:hover {
+                transform: scale(1.2);
+            }
+
+        .social-icons img {
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+        }
+        </style>
+
+<div class="hero">
+    <h1>Contact Us</h1>
+</div>
+
+<div class="contact-section">
+    <h2>Get In Touch</h2>
+    <div class="info">
+        <h3>Address</h3>
+        <p>D-204, Hole Town, South West, Delhi-110096, India</p>
+    </div>
+    <div class="info">
+        <h3>Sales</h3>
+        <p>Telephone: +85236121326</p>
+        <p>Email: info@gmail.com</p>
+    </div>
+    <div class="info social-media">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+            <a href="https://www.facebook.com" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384053.png" alt="Facebook">
+            </a>
+            <a href="https://twitter.com" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Twitter">
+            </a>
+            <a href="https://www.instagram.com" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="Instagram">
+            </a>
+        </div>
+    </div>
+</div>
