@@ -1,0 +1,176 @@
+@model HotelReservationManager.Models.Reservation
+
+@{
+    ViewData["Title"] = "Cancel Reservation";
+}
+
+<style>
+    body, html {
+        padding: 0;
+        font-family: 'Lora', serif;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+    }
+
+    /* Navbar */
+    .navbar {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 50px;
+        background: rgba(34, 49, 63, 0.9);
+        color: white;
+        z-index: 1000;
+    }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+            .navbar a:hover {
+                color: #f39c12;
+            }
+
+    /* Hero Section */
+    .hero {
+        position: relative;
+        width: 100%;
+        height: 50vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(38, 52, 65, 0.9);
+        text-align: center;
+    }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.8);
+        }
+
+    /* Reservation Card */
+    .reservation-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 30px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0px 5px 10px rgba(0,0,0,0.1);
+        width: 80%;
+        margin: 0 auto;
+    }
+
+        .reservation-card img {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+    .reservation-info {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+        .reservation-info h3, .reservation-info p {
+            margin: 10px 0;
+        }
+
+    .btn {
+        padding: 12px 24px;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .cancel-btn {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+    }
+
+        .cancel-btn:hover {
+            background-color: #c0392b;
+        }
+
+    .view-btn {
+        background-color: #3498db;
+        color: white;
+        margin-top: 20px;
+    }
+
+        .view-btn:hover {
+            background-color: #2980b9;
+        }
+
+    footer {
+        text-align: center;
+        background: #2c3e50;
+        color: white;
+        padding: 15px;
+        font-size: 1rem;
+        margin-top: 50px;
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="hero">
+    <h1>Cancel Your Reservation</h1>
+</div>
+
+<!-- Reservation Card -->
+<div class="container">
+    <div class="reservation-card">
+        @if (!string.IsNullOrEmpty(Model.Room.ImageUrl))
+        {
+            <img src="@Model.Room.ImageUrl" alt="Room Image">
+        }
+        else
+        {
+            <img src="https://via.placeholder.com/200x150" alt="Room Image">
+        }
+
+        <div class="reservation-info">
+            <h3>Room: @Model.Room.RoomType (#@Model.Room.RoomNumber)</h3>
+            <p>Guest: @Model.User.FirstName @Model.User.LastName</p>
+            <p>Check-in: @Model.CheckInDate.ToShortDateString()</p>
+            <p>Check-out: @Model.CheckOutDate.ToShortDateString()</p>
+            <p>Breakfast Included: @(Model.IsBreakfastIncluded ? "Yes" : "No")</p>
+            <p>All-Inclusive: @(Model.IsAllInclusive ? "Yes" : "No")</p>
+            <p>Total Amount: $@Model.AmountDue</p>
+
+            <h4>Clients:</h4>
+            <ul>
+                @foreach (var reservationClient in Model.ReservationClients)
+                {
+                    <li>@reservationClient.Client.FirstName @reservationClient.Client.LastName</li>
+                }
+            </ul>
+
+            <form asp-action="DeleteConfirmed" method="post">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn cancel-btn">Confirm Cancellation</button>
+            </form>
+
+            <a href="@Url.Action("Index", "Reservations")" class="btn view-btn">Back to Reservations</a>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    Hotel Booking Management System © 2024
+</footer>
