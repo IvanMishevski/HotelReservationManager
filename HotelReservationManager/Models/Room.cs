@@ -29,5 +29,13 @@ namespace HotelReservationManager.Models
 
         [Required]
         public int RoomNumber { get; set; }
+        
+        public string ImageUrl { get; set; }
+
+        // Method for updating the room availability
+        public void UpdateAvailability(bool availabilityStatus)
+        {
+             IsAvailable = availabilityStatus;
+        }
     }
 }
