@@ -30,6 +30,6 @@ namespace HotelReservationManager.Models
         [Required]
         public bool IsAdult { get; set; }
 
-        public List<ReservationClient> ReservationClients { get; set; } = new();
+        public List<ReservationClient> ReservationClients { get; set; } = new List<ReservationClient>();
     }
 }
