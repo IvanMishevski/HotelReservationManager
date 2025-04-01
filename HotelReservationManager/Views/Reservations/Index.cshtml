@@ -1,0 +1,190 @@
+@model IEnumerable<HotelReservationManager.Models.Reservation>
+
+@{
+    ViewData["Title"] = "Reservations";
+}
+
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: 'Lora', serif;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+    }
+
+    .navbar {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 50px;
+        background: rgba(34, 49, 63, 0.9);
+        color: white;
+        z-index: 1000;
+    }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+            .navbar a:hover {
+                color: #f39c12;
+            }
+
+    .footer {
+        height: 0px;
+        color: white;
+        text-align: center;
+        padding: 8px 15px;
+        position: relative;
+        margin-bottom: 50px;
+        font-size: 0.9rem;
+    }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+    .container {
+        max-width: 1200px;
+        max-height: auto;
+        margin: 100px auto 50px;
+        padding: 20px;
+    }
+
+    .reservation-card {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 5px 10px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .reservation-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0px 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .reservation-card img {
+            width: 200px;
+            height: 150px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+    .reservation-info {
+        flex: 1;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        background: #f39c12;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+        text-decoration: none;
+    }
+
+        .btn:hover {
+            background: #e67e22;
+        }
+
+    .cancel-btn {
+        background: #e74c3c;
+    }
+
+        .cancel-btn:hover {
+            background: #c0392b;
+        }
+
+    .special-request-btn {
+        background: #3498db;
+    }
+
+        .special-request-btn:hover {
+            background: #2980b9;
+        }
+
+    .view-btn {
+        background: #2ecc71;
+    }
+
+        .view-btn:hover {
+            background: #27ae60;
+        }
+</style>
+
+<div class="container">
+    <h1>Your Reservations</h1>
+
+    @if (!Model.Any())
+    {
+        <p>No reservations found.</p>
+    }
+    else
+    {
+        @foreach (var reservation in Model)
+        {
+            <div class="reservation-card">
+                @* Изображение на стаята *@
+                @if (!string.IsNullOrEmpty(reservation.Room.ImageUrl))
+                {
+                    <img src="@reservation.Room.ImageUrl" alt="Room Image">
+                }
+                else
+                {
+                    <img src="https://via.placeholder.com/200x150" alt="Room Image">  @* Запълваща картинка по подразбиране *@
+                }
+
+                <div class="reservation-info">
+                    <h3>Room: @reservation.Room.RoomType (#@reservation.Room.RoomNumber)</h3>
+                    <p>Guest: @reservation.User.FirstName @reservation.User.LastName</p>
+                    <p>Check-in: @reservation.CheckInDate.ToShortDateString()</p>
+                    <p>Check-out: @reservation.CheckOutDate.ToShortDateString()</p>
+                    <p>Breakfast Included: @(reservation.IsBreakfastIncluded ? "Yes" : "No")</p>
+                    <p>All-Inclusive: @(reservation.IsAllInclusive ? "Yes" : "No")</p>
+                    <p>Total Amount: $@reservation.AmountDue</p>
+
+                    @* Показване на клиентите, настанени в стаята *@
+                    <p>
+                        <strong>Clients:</strong>
+                        @foreach (var reservationClient in reservation.ReservationClients)
+                        {
+                            <span>@reservationClient.Client.FirstName</span>
+                            @if (reservationClient != reservation.ReservationClients.Last())
+                            {
+                                <span>, </span>
+                            }
+                        }
+                    </p>
+
+                    @* Преглед на резервацията *@
+                    <a href="@Url.Action("Details", "Reservations", new { id = reservation.Id })" class="btn view-btn">View Reservation</a>
+
+                    @* Редактиране на резервация *@
+                    <a href="@Url.Action("Edit", "Reservations", new { id = reservation.Id })" class="btn">Edit Reservation</a>
+
+                    @* Отмяна на резервация *@
+                    <a href="@Url.Action("Delete", "Reservations", new { id = reservation.Id })" class="btn cancel-btn">Cancel</a>
+                </div>
+            </div>
+        }
+    }
+</div>
