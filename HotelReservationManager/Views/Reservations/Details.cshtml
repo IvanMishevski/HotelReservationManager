@@ -1,0 +1,41 @@
+@model HotelReservationManager.Models.Reservation
+
+@{
+    ViewData["Title"] = "Reservation Details";
+}
+
+<div class="container">
+    <h1>Reservation Details</h1>
+
+    <div class="reservation-card">
+        @if (!string.IsNullOrEmpty(Model.Room.ImageUrl))
+        {
+                <img src="@Model.Room.ImageUrl" alt="Room Image">
+        }
+        else
+        {
+                <img src="https://via.placeholder.com/200x150" alt="Room Image">
+        }
+
+        <div class="reservation-info">
+            <h3>Room: @Model.Room.RoomType (#@Model.Room.RoomNumber)</h3>
+            <p>Guest: @Model.User.FirstName @Model.User.LastName</p>
+            <p>Check-in: @Model.CheckInDate.ToShortDateString()</p>
+            <p>Check-out: @Model.CheckOutDate.ToShortDateString()</p>
+            <p>Breakfast Included: @(Model.IsBreakfastIncluded ? "Yes" : "No")</p>
+            <p>All-Inclusive: @(Model.IsAllInclusive ? "Yes" : "No")</p>
+            <p>Total Amount: $@Model.AmountDue</p>
+
+            <h4>Clients:</h4>
+            <ul>
+                @foreach (var reservationClient in Model.ReservationClients)
+                {
+                        <li>@reservationClient.Client.FirstName @reservationClient.Client.LastName</li>
+                }
+            </ul>
+
+            <a href="@Url.Action("Edit", "Reservations", new { id = Model.Id })" class="btn">Modify Reservation</a>
+            <a href="@Url.Action("Delete", "Reservations", new { id = Model.Id })" class="btn cancel-btn">Cancel Reservation</a>
+        </div>
+    </div>
+</div>
