@@ -17,7 +17,7 @@ namespace HotelReservationManager.Models
         public Room Room { get; set; }
 
         [Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         [ForeignKey("UserId")]
         public User User { get; set; }

@@ -41,7 +41,8 @@ namespace HotelReservationManager.Migrations
                     IsAvailable = table.Column<bool>(type: "bit", nullable: false),
                     PriceForAdult = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     PriceForChild = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    RoomNumber = table.Column<int>(type: "int", nullable: false)
+                    RoomNumber = table.Column<int>(type: "int", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,19 +53,22 @@ namespace HotelReservationManager.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    FatherName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Egn = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateOfHire = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    DateOfRelease = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserRole = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,7 +82,7 @@ namespace HotelReservationManager.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoomId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CheckInDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CheckOutDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsBreakfastIncluded = table.Column<bool>(type: "bit", nullable: false),
@@ -96,24 +100,6 @@ namespace HotelReservationManager.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Reservations_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserRoles",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserRoles", x => new { x.UserId, x.Role });
-                    table.ForeignKey(
-                        name: "FK_UserRoles_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -155,40 +141,13 @@ namespace HotelReservationManager.Migrations
 
             migrationBuilder.InsertData(
                 table: "Rooms",
-                columns: new[] { "Id", "Capacity", "IsAvailable", "PriceForAdult", "PriceForChild", "RoomNumber", "RoomType" },
+                columns: new[] { "Id", "Capacity", "ImageUrl", "IsAvailable", "PriceForAdult", "PriceForChild", "RoomNumber", "RoomType" },
                 values: new object[,]
                 {
-                    { 1, 2, true, 50m, 30m, 101, "Double Room" },
-                    { 2, 4, true, 120m, 60m, 102, "Apartment" },
-                    { 3, 2, true, 75m, 40m, 103, "Room with Double Bed" },
-                    { 4, 1, true, 200m, 100m, 104, "Penthouse" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "DateOfHire", "DateOfRelease", "Egn", "Email", "FatherName", "FirstName", "IsActive", "LastName", "Password", "PhoneNumber", "Username" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2025, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "1234567890", "ivan.ivanov@example.com", "Petkov", "Ivan", true, "Ivanov", "admin123", "0871234567", "admin" },
-                    { 2, new DateTime(2025, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "0987654321", "maria.petrova@example.com", "Ivanova", "Maria", true, "Petrova", "emp1234", "0898765432", "employee" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Reservations",
-                columns: new[] { "Id", "AmountDue", "CheckInDate", "CheckOutDate", "IsAllInclusive", "IsBreakfastIncluded", "RoomId", "UserId" },
-                values: new object[,]
-                {
-                    { 1, 100m, new DateTime(2025, 3, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2025, 3, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), false, true, 1, 1 },
-                    { 2, 480m, new DateTime(2025, 3, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2025, 3, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), true, true, 2, 2 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "ReservationClients",
-                columns: new[] { "ClientId", "ReservationId" },
-                values: new object[,]
-                {
-                    { 1, 1 },
-                    { 2, 2 }
+                    { 1, 2, "https://media.hotel7dublin.com/image/upload/f_auto,g_auto,c_auto,w_3840,q_auto/v1708595213/Uploads/Hotel7/Cosy_Room_Hero_643fdf08b9.jpg", true, 50m, 30m, 101, "Double Room" },
+                    { 2, 4, "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/b0/b6/2b/apartment-hotels.jpg?w=1200&h=-1&s=1", true, 120m, 60m, 102, "Apartment" },
+                    { 3, 2, "https://image-tc.galaxy.tf/wijpeg-bxdv8c6ji6oftcroue33x7hfl/double-duble_standard.jpg?crop=122%2C0%2C1757%2C1318", true, 75m, 40m, 103, "Room with Double Bed" },
+                    { 4, 1, "https://www.paranych.com/uploads/benefits-penthouse-living-main-image.png", true, 200m, 100m, 104, "Penthouse" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -212,9 +171,6 @@ namespace HotelReservationManager.Migrations
         {
             migrationBuilder.DropTable(
                 name: "ReservationClients");
-
-            migrationBuilder.DropTable(
-                name: "UserRoles");
 
             migrationBuilder.DropTable(
                 name: "Clients");

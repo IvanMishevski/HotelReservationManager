@@ -65,17 +65,7 @@ namespace HotelReservationManager.Models
             modelBuilder.Entity<Client>().HasData(
                 new Client { Id = 1, FirstName = "Alexander", LastName = "Atanasov", PhoneNumber = "0876543210", Email = "alex.atanasov@example.com", IsAdult = true },
                 new Client { Id = 2, FirstName = "Stefka", LastName = "Dimitrova", PhoneNumber = "0896543210", Email = "stefka.dimitrova@example.com", IsAdult = true }
-            );
-
-            modelBuilder.Entity<Reservation>().HasData(
-                new Reservation { Id = 1, RoomId = 1, UserId = 1, CheckInDate = DateTime.Parse("2025-03-24"), CheckOutDate = DateTime.Parse("2025-03-26"), IsBreakfastIncluded = true, IsAllInclusive = false, AmountDue = 50 * 2 },
-                new Reservation { Id = 2, RoomId = 2, UserId = 2, CheckInDate = DateTime.Parse("2025-03-25"), CheckOutDate = DateTime.Parse("2025-03-27"), IsBreakfastIncluded = true, IsAllInclusive = true, AmountDue = 120 * 4 }
-            );
-
-            modelBuilder.Entity<ReservationClient>().HasData(
-                new ReservationClient { ReservationId = 1, ClientId = 1 },
-                new ReservationClient { ReservationId = 2, ClientId = 2 }
-            );
+            );    
         }
     }
 }

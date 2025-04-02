@@ -102,8 +102,9 @@ namespace HotelReservationManager.Migrations
                     b.Property<int>("RoomId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -112,30 +113,6 @@ namespace HotelReservationManager.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Reservations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AmountDue = 100m,
-                            CheckInDate = new DateTime(2025, 3, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CheckOutDate = new DateTime(2025, 3, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsAllInclusive = false,
-                            IsBreakfastIncluded = true,
-                            RoomId = 1,
-                            UserId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AmountDue = 480m,
-                            CheckInDate = new DateTime(2025, 3, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CheckOutDate = new DateTime(2025, 3, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsAllInclusive = true,
-                            IsBreakfastIncluded = true,
-                            RoomId = 2,
-                            UserId = 2
-                        });
                 });
 
             modelBuilder.Entity("HotelReservationManager.Models.ReservationClient", b =>
@@ -151,18 +128,6 @@ namespace HotelReservationManager.Migrations
                     b.HasIndex("ClientId");
 
                     b.ToTable("ReservationClients");
-
-                    b.HasData(
-                        new
-                        {
-                            ReservationId = 1,
-                            ClientId = 1
-                        },
-                        new
-                        {
-                            ReservationId = 2,
-                            ClientId = 2
-                        });
                 });
 
             modelBuilder.Entity("HotelReservationManager.Models.Room", b =>
@@ -175,6 +140,10 @@ namespace HotelReservationManager.Migrations
 
                     b.Property<int>("Capacity")
                         .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
@@ -202,6 +171,7 @@ namespace HotelReservationManager.Migrations
                         {
                             Id = 1,
                             Capacity = 2,
+                            ImageUrl = "https://media.hotel7dublin.com/image/upload/f_auto,g_auto,c_auto,w_3840,q_auto/v1708595213/Uploads/Hotel7/Cosy_Room_Hero_643fdf08b9.jpg",
                             IsAvailable = true,
                             PriceForAdult = 50m,
                             PriceForChild = 30m,
@@ -212,6 +182,7 @@ namespace HotelReservationManager.Migrations
                         {
                             Id = 2,
                             Capacity = 4,
+                            ImageUrl = "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/b0/b6/2b/apartment-hotels.jpg?w=1200&h=-1&s=1",
                             IsAvailable = true,
                             PriceForAdult = 120m,
                             PriceForChild = 60m,
@@ -222,6 +193,7 @@ namespace HotelReservationManager.Migrations
                         {
                             Id = 3,
                             Capacity = 2,
+                            ImageUrl = "https://image-tc.galaxy.tf/wijpeg-bxdv8c6ji6oftcroue33x7hfl/double-duble_standard.jpg?crop=122%2C0%2C1757%2C1318",
                             IsAvailable = true,
                             PriceForAdult = 75m,
                             PriceForChild = 40m,
@@ -232,6 +204,7 @@ namespace HotelReservationManager.Migrations
                         {
                             Id = 4,
                             Capacity = 1,
+                            ImageUrl = "https://www.paranych.com/uploads/benefits-penthouse-living-main-image.png",
                             IsAvailable = true,
                             PriceForAdult = 200m,
                             PriceForChild = 100m,
@@ -242,109 +215,58 @@ namespace HotelReservationManager.Migrations
 
             modelBuilder.Entity("HotelReservationManager.Models.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("DateOfHire")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDATE()");
-
-                    b.Property<DateTime?>("DateOfRelease")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Egn")
-                        .IsRequired()
+                    b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FatherName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("IsActive")
+                    b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
+                    b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserRole")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DateOfHire = new DateTime(2025, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Egn = "1234567890",
-                            Email = "ivan.ivanov@example.com",
-                            FatherName = "Petkov",
-                            FirstName = "Ivan",
-                            IsActive = true,
-                            LastName = "Ivanov",
-                            Password = "admin123",
-                            PhoneNumber = "0871234567",
-                            Username = "admin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DateOfHire = new DateTime(2025, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Egn = "0987654321",
-                            Email = "maria.petrova@example.com",
-                            FatherName = "Ivanova",
-                            FirstName = "Maria",
-                            IsActive = true,
-                            LastName = "Petrova",
-                            Password = "emp1234",
-                            PhoneNumber = "0898765432",
-                            Username = "employee"
-                        });
-                });
-
-            modelBuilder.Entity("HotelReservationManager.Models.UserRole", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
-
-                    b.Property<string>("Role")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)")
-                        .HasColumnOrder(1);
-
-                    b.HasKey("UserId", "Role");
-
-                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("HotelReservationManager.Models.Reservation", b =>
@@ -383,17 +305,6 @@ namespace HotelReservationManager.Migrations
                     b.Navigation("Client");
 
                     b.Navigation("Reservation");
-                });
-
-            modelBuilder.Entity("HotelReservationManager.Models.UserRole", b =>
-                {
-                    b.HasOne("HotelReservationManager.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HotelReservationManager.Models.Client", b =>

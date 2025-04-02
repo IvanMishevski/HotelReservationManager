@@ -1,12 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HotelReservationManager.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HotelReservationManager.Controllers
 {
     public class RoomsController : Controller
     {
+        private readonly HotelReservationContext _context;
+
+        public RoomsController(HotelReservationContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
-            return View();
+            var rooms = _context.Rooms.ToList();
+            return View(rooms);
         }
     }
 }

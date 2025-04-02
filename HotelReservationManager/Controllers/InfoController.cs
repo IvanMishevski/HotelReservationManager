@@ -4,9 +4,13 @@ namespace HotelReservationManager.Controllers
 {
     public class InfoController : Controller
     {
-        public IActionResult Index()
+        public IActionResult About()
         {
-            return View();
+            return View("About");
+        }
+        public IActionResult Contacts()
+        {
+            return View("Contacts");
         }
     }
 }
