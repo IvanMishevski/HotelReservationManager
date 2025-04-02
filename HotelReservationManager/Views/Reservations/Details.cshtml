@@ -4,22 +4,127 @@
     ViewData["Title"] = "Reservation Details";
 }
 
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: 'Lora', serif;
+        width: 100%;
+        height: 100%;
+        background: #ecf0f1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .navbar {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 50px;
+        background: rgba(34, 49, 63, 0.9);
+        color: white;
+        z-index: 1000;
+    }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+            .navbar a:hover {
+                color: #f39c12;
+            }
+    .container {
+        max-width: 900px;
+        margin: auto;
+        padding: 60px 10%;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0px 5px 10px rgba(0,0,0,0.15);
+        text-align: center;
+        flex: 1;
+    }
+
+    .reservation-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+        .reservation-card img {
+            width: 300px;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+    .reservation-info {
+        text-align: center;
+    }
+
+        .reservation-info h3 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+        }
+
+        .reservation-info p {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: #7f8c8d;
+        }
+
+    .btn {
+        display: inline-block;
+        padding: 12px 25px;
+        margin: 10px;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: bold;
+        color: white;
+        background: #f39c12;
+        border-radius: 8px;
+        transition: 0.3s;
+    }
+
+        .btn:hover {
+            background: #e67e22;
+        }
+
+    .cancel-btn {
+        background: #c0392b;
+    }
+
+        .cancel-btn:hover {
+            background: #e74c3c;
+        }
+
+    
+</style>
+
 <div class="container">
     <h1>Reservation Details</h1>
 
     <div class="reservation-card">
         @if (!string.IsNullOrEmpty(Model.Room.ImageUrl))
         {
-                <img src="@Model.Room.ImageUrl" alt="Room Image">
+            <img src="@Model.Room.ImageUrl" alt="Room Image">
         }
         else
         {
-                <img src="https://via.placeholder.com/200x150" alt="Room Image">
+            <img src="https://via.placeholder.com/300x200" alt="Room Image">
         }
 
         <div class="reservation-info">
             <h3>Room: @Model.Room.RoomType (#@Model.Room.RoomNumber)</h3>
-           @*  <p>Guest: @Model.User.FirstName @Model.User.LastName</p> *@
+            <p>Guest: @Model.User.FirstName @Model.User.LastName</p>
             <p>Check-in: @Model.CheckInDate.ToShortDateString()</p>
             <p>Check-out: @Model.CheckOutDate.ToShortDateString()</p>
             <p>Breakfast Included: @(Model.IsBreakfastIncluded ? "Yes" : "No")</p>
@@ -30,7 +135,7 @@
             <ul>
                 @foreach (var reservationClient in Model.ReservationClients)
                 {
-                        <li>@reservationClient.Client.FirstName @reservationClient.Client.LastName</li>
+                    <li>@reservationClient.Client.FirstName @reservationClient.Client.LastName</li>
                 }
             </ul>
 
@@ -39,3 +144,4 @@
         </div>
     </div>
 </div>
+
