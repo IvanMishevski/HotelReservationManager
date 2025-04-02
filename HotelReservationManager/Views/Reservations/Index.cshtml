@@ -155,7 +155,7 @@
 
                 <div class="reservation-info">
                     <h3>Room: @reservation.Room.RoomType (#@reservation.Room.RoomNumber)</h3>
-                    @* <p>Guest: @reservation.User.FirstName @reservation.User.LastName</p> *@
+                    <p>Guest: @reservation.User.FirstName @reservation.User.LastName</p>
                     <p>Check-in: @reservation.CheckInDate.ToShortDateString()</p>
                     <p>Check-out: @reservation.CheckOutDate.ToShortDateString()</p>
                     <p>Breakfast Included: @(reservation.IsBreakfastIncluded ? "Yes" : "No")</p>
@@ -175,13 +175,8 @@
                         }
                     </p>
 
-                    @* Преглед на резервацията *@
                     <a href="@Url.Action("Details", "Reservations", new { id = reservation.Id })" class="btn view-btn">View Reservation</a>
 
-                    @* Редактиране на резервация *@
-                    <a href="@Url.Action("Edit", "Reservations", new { id = reservation.Id })" class="btn">Edit Reservation</a>
-
-                    @* Отмяна на резервация *@
                     <a href="@Url.Action("Delete", "Reservations", new { id = reservation.Id })" class="btn cancel-btn">Cancel</a>
                 </div>
             </div>
