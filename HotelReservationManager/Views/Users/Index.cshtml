@@ -1,0 +1,275 @@
+@model IEnumerable<HotelReservationManager.Models.User>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: 'Lora', serif;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+    }
+
+    .navbar {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 50px;
+        background: rgba(34, 49, 63, 0.9);
+        color: white;
+        z-index: 1000;
+    }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+            .navbar a:hover {
+                color: #f39c12;
+            }
+
+    .hero {
+        position: relative;
+        width: 100%;
+        height: 30vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #222;
+        text-align: center;
+        margin-top: 80px;
+    }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.8);
+            margin-bottom: 10%;
+        }
+
+    .table {
+        width: 80%;
+        margin: 5px auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+        .table th, .table td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        .table th {
+            background: #2c3e50;
+            color: white;
+        }
+
+        .table td {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    .search-bar {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+        .search-bar input {
+            padding: 12px;
+            width: 50%;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+            .search-bar input:focus {
+                outline: none;
+                border-color: #f39c12;
+                box-shadow: 0 2px 8px rgba(243, 156, 18, 0.3);
+            }
+
+        .search-bar button {
+            padding: 12px 24px;
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+            .search-bar button:hover {
+                background-color: #e67e22;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            }
+
+    .pagination {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+        .pagination a {
+            margin: 0 10px;
+            padding: 8px 15px;
+            text-decoration: none;
+            color: #3498db;
+            border-radius: 5px;
+            background-color: #f1f1f1;
+            transition: background-color 0.3s;
+        }
+
+            .pagination a:hover {
+                background-color: #3498db;
+                color: white;
+            }
+
+    .actions {
+        display: flex;
+        gap: 10px;
+    }
+
+        .actions a {
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+    .edit-btn {
+        color: white;
+        background-color: #3498db;
+        border: 1px solid #2980b9;
+    }
+
+        .edit-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+    .delete-btn {
+        color: white;
+        background-color: #e74c3c;
+        border: 1px solid #c0392b;
+    }
+
+        .delete-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+    .create-btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 30px;
+        background-color: #2ecc71;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        border: none;
+        cursor: pointer;
+    }
+
+        .create-btn:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+    .status-active {
+        color: #2ecc71;
+        font-weight: bold;
+    }
+
+    .status-inactive {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+</style>
+
+<div class="hero">
+    <h1>Users Management</h1>
+</div>
+
+<div class="container">
+    <h2 class="text-center">Users</h2>
+
+    <div class="search-bar">
+        <form method="get">
+            <input type="text" name="searchString" value="@ViewContext.HttpContext.Request.Query["searchString"]" placeholder="Search users..." />
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Username)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstName)</th>
+                <th>@Html.DisplayNameFor(model => model.LastName)</th>
+                <th>@Html.DisplayNameFor(model => model.Email)</th>
+                <th>@Html.DisplayNameFor(model => model.DateOfHire)</th>
+                <th>@Html.DisplayNameFor(model => model.IsActive)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Username</td>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    <td>@user.Email</td>
+                    <td>@user.DateOfHire.ToString("dd/MM/yyyy")</td>
+                    <td class="@(user.IsActive ? "status-active" : "status-inactive")">@(user.IsActive ? "Yes" : "No")</td>
+                    <td class="actions">
+                        <a href="@Url.Action("Edit", "Users", new { id = user.Id })" class="edit-btn">Edit</a>
+                        <a href="@Url.Action("Delete", "Users", new { id = user.Id })" class="delete-btn">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        Page: @ViewBag.CurrentPage of @ViewBag.TotalPages
+    </div>
+    <div class="pagination">
+        @for (var i = 1; i <= @ViewBag.TotalPages; i++)
+        {
+            <a href="@Url.Action("Index", "Users", new { pageNumber = i, pageSize = 10 })">@i</a>
+        }
+    </div>
+
+    <div class="text-center">
+        <a href="@Url.Action("Create", "Users")" class="create-btn">Create New User</a>
+    </div>
+</div>
