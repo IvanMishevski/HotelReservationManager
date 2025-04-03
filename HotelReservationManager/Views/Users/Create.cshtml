@@ -1,0 +1,251 @@
+@model HotelReservationManager.Models.User
+
+@{
+    ViewData["Title"] = "Create New User";
+}
+
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: 'Lora', serif;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+    }
+
+    .navbar {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 50px;
+        background: rgba(34, 49, 63, 0.9);
+        color: white;
+        z-index: 1000;
+    }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+            .navbar a:hover {
+                color: #f39c12;
+            }
+
+    .hero {
+        position: relative;
+        width: 100%;
+        height: 20vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #222;
+        text-align: center;
+        margin-top: 80px;
+    }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+        }
+
+    .form-container {
+        width: 60%;
+        margin: 30px auto;
+        padding: 30px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .control-label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: #f39c12;
+            box-shadow: 0 0 8px rgba(243, 156, 18, 0.3);
+            outline: none;
+        }
+
+    .btn {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-primary {
+        background-color: #2ecc71;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+    .btn-back {
+        background-color: #95a5a6;
+        color: white;
+        margin-right: 15px;
+    }
+
+        .btn-back:hover {
+            background-color: #7f8c8d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+    .user-icon {
+        font-size: 5rem;
+        color: #3498db;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .validation-summary {
+        color: #e74c3c;
+        margin-bottom: 20px;
+    }
+
+    .field-validation-error {
+        color: #e74c3c;
+        font-size: 0.9rem;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 20px;
+    }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+</style>
+
+<div class="hero">
+    <h1>Create New User</h1>
+</div>
+
+<div class="form-container">
+    <div class="user-icon">
+        <i class="fas fa-user-plus"></i>
+    </div>
+
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="field-validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="field-validation-error"></span>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="field-validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="field-validation-error"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="field-validation-error"></span>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label asp-for="Egn" class="control-label"></label>
+                <input asp-for="Egn" class="form-control" />
+                <span asp-validation-for="Egn" class="field-validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="field-validation-error"></span>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label asp-for="DateOfHire" class="control-label"></label>
+                <input asp-for="DateOfHire" type="date" class="form-control" />
+                <span asp-validation-for="DateOfHire" class="field-validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">
+                    <input asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <a asp-action="Index" class="btn btn-back">Back to List</a>
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <script>
+        // Initialize datepicker if needed
+        $(document).ready(function() {
+            $('#DateOfHire').datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true
+            });
+        });
+    </script>
+}
