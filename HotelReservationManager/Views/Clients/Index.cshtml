@@ -1,0 +1,196 @@
+@model IEnumerable<HotelReservationManager.Models.Client>
+
+@{
+    ViewData["Title"] = "Clients";
+}
+
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: 'Lora', serif;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+    }
+
+    .navbar {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 50px;
+        background: rgba(34, 49, 63, 0.9);
+        color: white;
+        z-index: 1000;
+    }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+            .navbar a:hover {
+                color: #f39c12;
+            }
+    .hero {
+        position: relative;
+        width: 100%;
+        height: 30vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #222;
+        text-align: center;
+        margin-top: 80px;
+    }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.8);
+            margin-bottom: 10%;
+        }
+
+    .table {
+        width: 80%;
+        margin: 20px auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+        .table th, .table td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        .table th {
+            background: #2c3e50;
+            color: white;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    .search-bar {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+        .search-bar input {
+            padding: 12px;
+            width: 50%;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .search-bar button {
+            padding: 12px 24px;
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+    .pagination {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+        .pagination a {
+            margin: 0 10px;
+            padding: 8px 15px;
+            text-decoration: none;
+            color: #3498db;
+            border-radius: 5px;
+            background-color: #f1f1f1;
+        }
+
+    .actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .actions a {
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .view-btn {
+        color: white;
+        background-color: #3498db;
+        border: 1px solid #2980b9;
+    }
+
+        .view-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+    
+</style>
+
+
+<div class="hero">
+    <h1>Clients Management</h1>
+</div>
+
+<div class="container">
+    <h2 class="text-center">Clients</h2>
+
+    <div class="search-bar">
+        <form method="get">
+            <input type="text" name="searchString" placeholder="Search clients..." />
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Adult</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var client in Model)
+            {
+                <tr>
+                    <td>@client.FirstName @client.LastName</td>
+                    <td>@client.PhoneNumber</td>
+                    <td>@client.Email</td>
+                    <td>@(client.IsAdult ? "Yes" : "No")</td>
+                    <td class="actions">
+                        <a href="@Url.Action("Reservations", "Clients", new { id = client.Id })" class="view-btn">View Reservations</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        Page: @ViewBag.CurrentPage of @ViewBag.TotalPages
+    </div>
+    <div class="pagination">
+        @for (var i = 1; i <= @ViewBag.TotalPages; i++)
+        {
+            <a href="@Url.Action("Index", "Clients", new { pageNumber = i })">@i</a>
+        }
+    </div>
+</div>
