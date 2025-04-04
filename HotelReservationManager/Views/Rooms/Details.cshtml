@@ -107,8 +107,8 @@
     <p><strong>Price (Child):</strong> $@Model.PriceForChild</p>
     <p><strong>Available:</strong> @(Model.IsAvailable ? "Yes" : "No")</p>
 
-    <a href="@Url.Action("Index", "Rooms")" class="btn-back">Back to Rooms</a>
+    <a asp-controller="Rooms" asp-action="Index" class="btn-back">Back to Rooms</a>
 
     <!-- Book Now Button -->
-    <a href="@Url.Action("Reservations", new { roomId = Model.Id })" class="btn-book">Book Now</a>
+    <a asp-controller="Reservations" asp-action="Index" asp-route-id="@Model.Id" class="btn-book">Book Now</a>
 </div>

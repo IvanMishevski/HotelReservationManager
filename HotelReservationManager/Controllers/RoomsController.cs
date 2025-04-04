@@ -16,5 +16,10 @@ namespace HotelReservationManager.Controllers
             var rooms = _context.Rooms.ToList();
             return View(rooms);
         }
+        public IActionResult Details(int Id)
+        {
+            var room = _context.Rooms.FirstOrDefault(r => r.Id == Id);
+            return View(room);
+        }
     }
 }

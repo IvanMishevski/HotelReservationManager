@@ -116,7 +116,7 @@
                 <p>Capacity: @room.Capacity people</p>
                 <p>Price (Adult): $@room.PriceForAdult</p>
                 <p>Price (Child): $@room.PriceForChild</p>
-                <a href="@Url.Action("Details", "Rooms", new { id = room.Id })" class="btn-details">Details</a>
+                <a asp-controller="Rooms" asp-action="Details" asp-route-id="@room.Id" class="btn-details">Details</a>
             </div>
         </div>
     }
