@@ -15,13 +15,21 @@
             <a asp-controller="Home" asp-action="Index">Home</a>
             <a asp-controller="Rooms" asp-action="Index">Rooms</a>
             <a asp-controller="Reservations" asp-action="Index">Reservations</a>
-            <a asp-controller="Users" asp-action="Index">Users</a>
             <a asp-controller="Clients" asp-action="Index">Clients</a>
             <a asp-controller="Info" asp-action="About">About</a>
             <a asp-controller="Info" asp-action="Contacts">Contacts</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+            <a asp-controller="Users" asp-action="Index">Users</a>
             <a asp-controller="Account" asp-action="Admin">Admin</a>
-            <a asp-controller="Account" asp-action="Register">Sign Up</a>
-            <a asp-controller="Account" asp-action="Login">Log In</a>
+            <a asp-controller="Account" asp-action="Logout">Log out</a>
+            }
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <a asp-controller="Account" asp-action="Register">Sign Up</a>
+                <a asp-controller="Account" asp-action="Login">Log In</a>
+            }
+              
         </div>
     </div>
 

@@ -4,13 +4,29 @@ namespace HotelReservationManager.Models
 {
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "Full Name is required")]
-        [Display(Name = "Full Name")]
-        public required string FullName { get; set; }
+
+        [Required(ErrorMessage = "Username is required")]
+        [Display(Name = "UserName")]
+        public required string UserName { get; set; }
+
+        [Required(ErrorMessage = "First name is required")]
+        [Display(Name = "FirstName")]
+        public required string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Middle name is required")]
+        [Display(Name = "MiddleName")]
+        public required string MiddleName { get; set; }
+        [Required(ErrorMessage = "Last name is required")]
+        [Display(Name = "LastName")]
+        public required string LastName { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid email format")]
         public required string Email { get; set; }
+
+        [Required(ErrorMessage = "Phone number is required")]
+        [Display(Name = "PhoneNumber")]
+        public required string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]

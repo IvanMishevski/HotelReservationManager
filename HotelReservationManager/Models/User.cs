@@ -15,25 +15,14 @@ namespace HotelReservationManager.Models
         [StringLength(50)]
         public string MiddleName { get; set; }
 
-        [StringLength(50)]
-        public string FatherName { get; set; }
-
         [Required]
         [StringLength(50)]
         public string LastName { get; set; }
 
-        [Required]
+        
         [StringLength(10)]
         [RegularExpression(@"^\d{10}$", ErrorMessage = "EGN must be 10 digits.")]
-        public string EGN { get; set; }
-
-        // PhoneNumber is already in IdentityUser, but we can add the validation attribute
-        [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be 10 digits.")]
-        public override string PhoneNumber { get; set; }
-
-        // Email is already in IdentityUser, but we can add the validation attribute
-        [EmailAddress]
-        public override string Email { get; set; }
+        public string? EGN { get; set; }
 
         [Required]
         public DateTime HireDate { get; set; }

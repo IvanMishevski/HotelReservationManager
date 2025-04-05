@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -5,14 +6,13 @@ using System.Reflection.Emit;
 
 namespace HotelReservationManager.Models
 {
-    public class HotelReservationContext : DbContext
+    public class HotelReservationContext : IdentityDbContext
     {
         public HotelReservationContext(DbContextOptions<HotelReservationContext> options)
             : base(options)
         { }
 
         // DbSet for each table
-        public DbSet<User> Users { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
@@ -22,6 +22,8 @@ namespace HotelReservationManager.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>().ToTable("Users");
 
             // Many-to-many relationship between reservations and clients
             modelBuilder.Entity<ReservationClient>()
