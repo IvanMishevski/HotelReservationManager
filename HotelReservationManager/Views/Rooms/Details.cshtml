@@ -112,7 +112,7 @@
     <!-- Book Now Button -->
     @if (User.Identity.IsAuthenticated)
     {
-        if (!ViewBag.UserHasReservation && Model.IsAvailable)
+        if (!ViewBag.UserHasReservation && Model.IsAvailable && ViewBag.isActive)
         {
         <a asp-controller="Reservations" asp-action="Create" asp-route-id="@Model.Id" class="btn-book">Book Now</a>    
         }

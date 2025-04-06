@@ -58,6 +58,7 @@ namespace HotelReservationManager.Controllers
                         r.UserId == user.Id &&
                         r.RoomId == Id);
                        
+                ViewBag.isActive = user.IsActive;
                 }
 
                 ViewBag.UserHasReservation = userHasReservation;
