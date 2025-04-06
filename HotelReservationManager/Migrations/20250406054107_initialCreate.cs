@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HotelReservationManager.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class initialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -274,12 +274,12 @@ namespace HotelReservationManager.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "1", "3e066125-ef34-4023-be98-d3e2792c1b5f", "Admin", "ADMIN" });
+                values: new object[] { "1", "47ad850f-7031-4140-b6c4-34d4cdf77f5a", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1", 0, "76fe18da-4448-4ea8-a41f-0696ebc86916", "admin@hotel.com", true, false, null, "ADMIN@HOTEL.COM", "ADMIN", "AQAAAAIAAYagAAAAEJMr0V/LAeyvn3G52KMtdG/P99FC/1EOWyRSGf3aN8+a+PrtAED1dOIJQBdhRgQC0w==", "0888888888", true, "87579cb3-2d1e-4907-a79a-b7d6093e4e20", false, "admin" });
+                values: new object[] { "1", 0, "d89693ce-2bef-43c8-99f1-447dbc07fe33", "admin@hotel.com", true, false, null, "ADMIN@HOTEL.COM", "ADMIN", "AQAAAAIAAYagAAAAEGlvLC9bD1SslkBrlRW1Rl31XWcD8G6MRhANqiSXCfBqQRUAJqrH4+gTTtvXE//vDA==", "0888888888", true, "41531d8c-49f7-4f4f-aaba-d4b83d054366", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "Clients",

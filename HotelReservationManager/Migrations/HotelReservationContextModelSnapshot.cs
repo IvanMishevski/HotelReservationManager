@@ -238,7 +238,7 @@ namespace HotelReservationManager.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "3e066125-ef34-4023-be98-d3e2792c1b5f",
+                            ConcurrencyStamp = "47ad850f-7031-4140-b6c4-34d4cdf77f5a",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -464,16 +464,16 @@ namespace HotelReservationManager.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "76fe18da-4448-4ea8-a41f-0696ebc86916",
+                            ConcurrencyStamp = "d89693ce-2bef-43c8-99f1-447dbc07fe33",
                             Email = "admin@hotel.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@HOTEL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJMr0V/LAeyvn3G52KMtdG/P99FC/1EOWyRSGf3aN8+a+PrtAED1dOIJQBdhRgQC0w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGlvLC9bD1SslkBrlRW1Rl31XWcD8G6MRhANqiSXCfBqQRUAJqrH4+gTTtvXE//vDA==",
                             PhoneNumber = "0888888888",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "87579cb3-2d1e-4907-a79a-b7d6093e4e20",
+                            SecurityStamp = "41531d8c-49f7-4f4f-aaba-d4b83d054366",
                             TwoFactorEnabled = false,
                             UserName = "admin",
                             EGN = "0000000000",

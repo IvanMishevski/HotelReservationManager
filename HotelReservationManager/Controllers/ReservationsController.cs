@@ -38,12 +38,13 @@ namespace HotelReservationManager.Controllers
                 Dictionary<int, bool> userReservationsByRoom = new Dictionary<int, bool>();
 
                 // Get all rooms
-                var allRooms = _context.Rooms.Select(r => r.Id).ToList();
+                var allRooms = _context.Rooms.Select(r => new { r.Id, r.IsAvailable }).ToList();
+
 
                 // Initialize dictionary with all rooms set to false (no reservation)
-                foreach (var roomId in allRooms)
+                foreach (var room in allRooms)
                 {
-                    userReservationsByRoom[roomId] = false;
+                    userReservationsByRoom[room.Id] = !room.IsAvailable;
                 }
 
                 // Mark rooms that the user has reservations for
@@ -80,16 +81,11 @@ namespace HotelReservationManager.Controllers
 
             try
             {
-                if (reservation.CheckInDate > reservation.CheckOutDate)
+                if(reservation.CheckInDate > reservation.CheckOutDate)
                 {
-                    ModelState.AddModelError("CheckOutDate", "Check-out date must be after check-in date.");
+                    throw new Exception("Check-in date must be before check-out date.");
                 }
-
-                if (reservation.CheckOutDate < reservation.CheckInDate)
-                {
-                    ModelState.AddModelError("CheckInDate", "Check-in date must be before check-out date.");
-                }
-                string userId = _userManager.GetUserId(User);
+                    string userId = _userManager.GetUserId(User);
                 if (RoomId != null && userId != null)
                 {
                     // Just set the foreign keys, not the navigation properties
