@@ -32,7 +32,7 @@ namespace HotelReservationManager.Controllers
 
             return View(clientsList);
         }
-        public async Task<IActionResult> Reservations(string id, int pageSize = 10, int pageNumber = 1)
+        public async Task<IActionResult> Reservations(string searchString, string id, int pageSize = 10, int pageNumber = 1)
         {
             var client = await _context.Clients
                 .Include(c => c.ReservationClients)
@@ -45,19 +45,35 @@ namespace HotelReservationManager.Controllers
                 return NotFound();
             }
 
-            var reservations = client.ReservationClients
+            var reservationsQuery = client.ReservationClients
                 .Select(rc => rc.Reservation)
+                .AsQueryable();
+
+            // Apply search filter if searchString is provided
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                reservationsQuery = reservationsQuery.Where(r =>
+                    (r.Room.RoomNumber).ToString().Contains(searchString) ||
+                    r.CheckInDate.ToString().Contains(searchString) ||
+                    r.CheckOutDate.ToString().Contains(searchString));
+            }
+
+            // Order and paginate the results
+            var reservations = reservationsQuery
                 .OrderByDescending(r => r.CheckInDate)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
 
-            int totalReservations = client.ReservationClients.Count;
+            int totalReservations = !string.IsNullOrEmpty(searchString)
+                ? reservationsQuery.Count()
+                : client.ReservationClients.Count;
 
             ViewBag.ClientName = $"{client.FirstName} {client.LastName}";
             ViewBag.TotalPages = (int)Math.Ceiling((double)totalReservations / pageSize);
             ViewBag.CurrentPage = pageNumber;
             ViewBag.ClientId = id;
+            ViewBag.SearchString = searchString; // Pass the search string to the view
 
             return View(reservations);
         }
