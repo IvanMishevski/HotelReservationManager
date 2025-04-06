@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,13 +12,21 @@ namespace HotelReservationManager.Models
         public HotelReservationContext(DbContextOptions<HotelReservationContext> options)
             : base(options)
         { }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.ConfigureWarnings(warnings =>
+                warnings.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning));
+        }
 
         // DbSet for each table
         public DbSet<Client> Clients { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ReservationClient> ReservationClients { get; set; }
-        
+
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,6 +35,19 @@ namespace HotelReservationManager.Models
             modelBuilder.Entity<User>().ToTable("Users");
 
             // Many-to-many relationship between reservations and clients
+            // Make UserId nullable in the Reservation entity
+            modelBuilder.Entity<Reservation>()
+                .HasOne(r => r.User)
+                .WithMany()
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            // Ensuring UserId is nullable
+            modelBuilder.Entity<Reservation>()
+                .Property(r => r.UserId)
+                .IsRequired(false); // This will ensure that UserId is nullable
+
+            // Many-to-many relationship between Reservations and Clients
             modelBuilder.Entity<ReservationClient>()
                 .HasKey(rc => new { rc.ReservationId, rc.ClientId });
 
@@ -39,6 +61,7 @@ namespace HotelReservationManager.Models
                 .WithMany(c => c.ReservationClients)
                 .HasForeignKey(rc => rc.ClientId);
 
+            // Configure Room prices as decimals with specific precision and scale
             modelBuilder.Entity<Room>()
                 .Property(r => r.PriceForAdult)
                 .HasColumnType("decimal(18,2)");
@@ -51,9 +74,55 @@ namespace HotelReservationManager.Models
                 .Property(r => r.AmountDue)
                 .HasColumnType("decimal(18,2)");
 
-            // UserRole primary key
-  
+            // Seed Admin Role
+            var adminRoleId = "1";
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole
+                {
+                    Id = adminRoleId,
+                    Name = "Admin",
+                    NormalizedName = "ADMIN",
+                    ConcurrencyStamp = Guid.NewGuid().ToString() // Replace with static GUID
+                }
+            );
 
+            // Seed Admin User
+            var adminUserId = "1";
+            var hasher = new PasswordHasher<IdentityUser>();
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = adminUserId,
+                    UserName = "admin",
+                    NormalizedUserName = "ADMIN",
+                    Email = "admin@hotel.com",
+                    NormalizedEmail = "ADMIN@HOTEL.COM",
+                    EmailConfirmed = true,
+                    PasswordHash = hasher.HashPassword(null, "Admin123!"),
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    ConcurrencyStamp = Guid.NewGuid().ToString(),
+                    PhoneNumber = "0888888888",
+                    PhoneNumberConfirmed = true,
+
+                    // User-specific required properties
+                    FirstName = "Admin",
+                    MiddleName = "System",
+                    LastName = "Administrator",
+                    EGN = "0000000000", // Optional, can be null
+                    HireDate = DateTime.Now.Date,
+                    IsActive = true,
+                    TerminationDate = null // Optional
+                }
+            );
+
+            // Assign Admin Role to Admin User
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string>
+                {
+                    RoleId = adminRoleId,
+                    UserId = adminUserId
+                }
+            );
             // Seed Data
 
             modelBuilder.Entity<Room>().HasData(
@@ -65,8 +134,8 @@ namespace HotelReservationManager.Models
 
 
             modelBuilder.Entity<Client>().HasData(
-                new Client { Id = 1, FirstName = "Alexander", LastName = "Atanasov", PhoneNumber = "0876543210", Email = "alex.atanasov@example.com", IsAdult = true },
-                new Client { Id = 2, FirstName = "Stefka", LastName = "Dimitrova", PhoneNumber = "0896543210", Email = "stefka.dimitrova@example.com", IsAdult = true }
+                new Client { Id = "1", FirstName = "Alexander", LastName = "Atanasov", PhoneNumber = "0876543210", Email = "alex.atanasov@example.com", IsAdult = true },
+                new Client { Id = "2", FirstName = "Stefka", LastName = "Dimitrova", PhoneNumber = "0896543210", Email = "stefka.dimitrova@example.com", IsAdult = true }
             );    
         }
     }

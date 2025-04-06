@@ -176,7 +176,7 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <a asp-action="Index" class="btn btn-back">Back to List</a>
-        <input type="submit" value="Delete" class="btn btn-danger" />
+        <input asp-controller="Users" asp-action="DeleteSubmit" type="submit" value="Delete" class="btn btn-danger" />
     </form>
 </div>
 

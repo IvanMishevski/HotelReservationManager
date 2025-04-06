@@ -8,7 +8,7 @@ namespace HotelReservationManager.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public string  Id { get; set; }
 
         [Required]
         public int RoomId { get; set; }
@@ -22,7 +22,7 @@ namespace HotelReservationManager.Models
         [ForeignKey("UserId")]
         public User User { get; set; }
 
-        public List<ReservationClient> ReservationClients { get; set; } = new();
+        public List<ReservationClient> ReservationClients { get; set; }
 
         [Required]
         public DateTime CheckInDate { get; set; }

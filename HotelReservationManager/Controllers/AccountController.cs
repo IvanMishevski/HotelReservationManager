@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace HotelReservationManager.Controllers
 {
@@ -58,6 +59,7 @@ namespace HotelReservationManager.Controllers
                     LastName = model.LastName,
                     UserName = model.UserName,
                     PhoneNumber = model.PhoneNumber,
+                    EGN = model.EGN,
                     Email = model.Email
                 };
 
@@ -136,6 +138,25 @@ namespace HotelReservationManager.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+        public IActionResult Admin()
+        {
+            var user = _userManager.GetUserAsync(User).Result;
+
+            // Count available rooms
+            int availableRooms = _context.Rooms.Count(r => r.IsAvailable);
+
+            // Create and populate AdminViewModel with data from User
+            var adminViewModel = new AdminViewModel
+            {
+                FirsName = user.FirstName,  // Note: There's a typo in your model property name "FirsName"
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                AvailableRooms = availableRooms
+            };
+
+            return View(adminViewModel);
         }
     }
 }

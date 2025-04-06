@@ -5,10 +5,10 @@ namespace HotelReservationManager.Models
 {
     public class ReservationClient
     {
-        public int ReservationId { get; set; }
+        public string ReservationId { get; set; }
         public Reservation Reservation { get; set; }
 
-        public int ClientId { get; set; }
+        public string ClientId { get; set; }
         public Client Client { get; set; }
     }
 }

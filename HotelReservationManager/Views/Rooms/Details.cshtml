@@ -110,5 +110,11 @@
     <a asp-controller="Rooms" asp-action="Index" class="btn-back">Back to Rooms</a>
 
     <!-- Book Now Button -->
-    <a asp-controller="Reservations" asp-action="Index" asp-route-id="@Model.Id" class="btn-book">Book Now</a>
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (!ViewBag.UserHasReservation && Model.IsAvailable)
+        {
+        <a asp-controller="Reservations" asp-action="Create" asp-route-id="@Model.Id" class="btn-book">Book Now</a>    
+        }
+    }
 </div>

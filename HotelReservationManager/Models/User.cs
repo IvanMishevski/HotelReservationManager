@@ -19,17 +19,19 @@ namespace HotelReservationManager.Models
         [StringLength(50)]
         public string LastName { get; set; }
 
-        
+
         [StringLength(10)]
         [RegularExpression(@"^\d{10}$", ErrorMessage = "EGN must be 10 digits.")]
-        public string? EGN { get; set; }
+        [Required]
+        public string EGN { get; set; }
 
         [Required]
-        public DateTime HireDate { get; set; }
+        public DateTime HireDate { get; set; } = DateTime.Now;
 
         [Required]
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
 
         public DateTime? TerminationDate { get; set; }
+       
     }
 }

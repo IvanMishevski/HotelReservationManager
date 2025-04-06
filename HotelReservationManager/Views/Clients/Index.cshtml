@@ -177,7 +177,7 @@
                     <td>@client.Email</td>
                     <td>@(client.IsAdult ? "Yes" : "No")</td>
                     <td class="actions">
-                        <a href="@Url.Action("Reservations", "Clients", new { id = client.Id })" class="view-btn">View Reservations</a>
+                        <a asp-controller="Clients" asp-action="Reservations" asp-route-id="@client.Id" class="view-btn">View Reservations</a>
                     </td>
                 </tr>
             }

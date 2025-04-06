@@ -144,8 +144,6 @@
                     <th>Room</th>
                     <th>Check-In</th>
                     <th>Check-Out</th>
-                    <th>Guests</th>
-                    <th>Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -155,8 +153,6 @@
                         <td>@reservation.Room?.RoomNumber</td>
                         <td>@reservation.CheckInDate.ToString("dd/MM/yyyy")</td>
                         <td>@reservation.CheckOutDate.ToString("dd/MM/yyyy")</td>
-                       @*  <td>@reservation.NumberOfGuests</td>
-                        <td>$@reservation.TotalPrice.ToString("0.00")</td> *@
                     </tr>
                 }
             </tbody>

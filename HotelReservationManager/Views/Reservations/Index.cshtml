@@ -143,26 +143,21 @@
         @foreach (var reservation in Model)
         {
             <div class="reservation-card">
-                @* Изображение на стаята *@
+               
                 @if (!string.IsNullOrEmpty(reservation.Room.ImageUrl))
                 {
                     <img src="@reservation.Room.ImageUrl" alt="Room Image">
                 }
                 else
                 {
-                    <img src="https://via.placeholder.com/200x150" alt="Room Image">  @* Запълваща картинка по подразбиране *@
+                    <img src="https://via.placeholder.com/200x150" alt="Room Image">  
                 }
 
                 <div class="reservation-info">
                     <h3>Room: @reservation.Room.RoomType (#@reservation.Room.RoomNumber)</h3>
-                    @* <p>Guest: @reservation.User.FirstName @reservation.User.LastName</p> *@
                     <p>Check-in: @reservation.CheckInDate.ToShortDateString()</p>
                     <p>Check-out: @reservation.CheckOutDate.ToShortDateString()</p>
-                    <p>Breakfast Included: @(reservation.IsBreakfastIncluded ? "Yes" : "No")</p>
-                    <p>All-Inclusive: @(reservation.IsAllInclusive ? "Yes" : "No")</p>
-                    <p>Total Amount: $@reservation.AmountDue</p>
-
-                    @* Показване на клиентите, настанени в стаята *@
+                    
                     <p>
                         <strong>Clients:</strong>
                         @foreach (var reservationClient in reservation.ReservationClients)
@@ -175,9 +170,12 @@
                         }
                     </p>
 
-                    <a href="@Url.Action("Details", "Reservations", new { id = reservation.Id })" class="btn view-btn">View Reservation</a>
+                    <a asp-controller="Reservations" asp-action="Details" asp-route-id="@reservation.Id" class="btn view-btn">View Reservation</a>
 
-                    <a href="@Url.Action("Delete", "Reservations", new { id = reservation.Id })" class="btn cancel-btn">Cancel</a>
+                    @if (User.IsInRole("Admin") || reservation.UserId == ViewBag.CurrentUserId)
+                    {
+                        <a asp-controller="Reservations" asp-action="Delete" asp-route-id="@reservation.Id" class="btn cancel-btn">Cancel</a>
+                    }
                 </div>
             </div>
         }

@@ -124,7 +124,7 @@
 
         <div class="reservation-info">
             <h3>Room: @Model.Room.RoomType (#@Model.Room.RoomNumber)</h3>
-            @* <p>Guest: @Model.User.FirstName @Model.User.LastName</p> *@
+            <p>Guest: @Model.User.FirstName @Model.User.LastName</p>
             <p>Check-in: @Model.CheckInDate.ToShortDateString()</p>
             <p>Check-out: @Model.CheckOutDate.ToShortDateString()</p>
             <p>Breakfast Included: @(Model.IsBreakfastIncluded ? "Yes" : "No")</p>
@@ -139,7 +139,7 @@
                 }
             </ul>
 
-            <a href="@Url.Action("Delete", "Reservations", new { id = Model.Id })" class="btn cancel-btn">Cancel Reservation</a>
+            <a asp-controller="Reservations" asp-action="Delete" asp-route-id="@Model.Id" class="btn cancel-btn">Cancel Reservation</a>
         </div>
     </div>
 </div>

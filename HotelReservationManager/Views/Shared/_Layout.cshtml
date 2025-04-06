@@ -21,7 +21,10 @@
             @if (User.Identity.IsAuthenticated)
             {
             <a asp-controller="Users" asp-action="Index">Users</a>
-            <a asp-controller="Account" asp-action="Admin">Admin</a>
+                @if (User.IsInRole("Admin"))
+                {
+                 <a asp-controller="Account" asp-action="Admin" >Admin</a>    
+                }
             <a asp-controller="Account" asp-action="Logout">Log out</a>
             }
             @if (!User.Identity.IsAuthenticated)

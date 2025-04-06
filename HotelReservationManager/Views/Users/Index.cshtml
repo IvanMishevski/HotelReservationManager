@@ -248,12 +248,16 @@
                     <td>@user.FirstName</td>
                     <td>@user.LastName</td>
                     <td>@user.Email</td>
-                    <td>@user.HireDate.ToString("dd/MM/yyyy")</td>
+                    <td>@user.HireDate.ToString("dd.MM.yyyy")</td>
                     <td class="@(user.IsActive ? "status-active" : "status-inactive")">@(user.IsActive ? "Yes" : "No")</td>
-                    <td class="actions">
-                        <a href="@Url.Action("Edit", "Users", new { id = user.Id })" class="edit-btn">Edit</a>
-                        <a href="@Url.Action("Delete", "Users", new { id = user.Id })" class="delete-btn">Delete</a>
-                    </td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td class="actions">
+                            <a asp-controller="Users" asp-action="Edit" asp-route-id="@user.Id" class="edit-btn">Edit</a>
+                            <a asp-controller="Users" asp-action="Delete" asp-route-id="@user.Id" class="delete-btn">Delete</a>
+                        </td>
+                    }
+                    
                 </tr>
             }
         </tbody>
@@ -270,6 +274,6 @@
     </div>
 
     <div class="text-center">
-        <a href="@Url.Action("Create", "Users")" class="create-btn">Create New User</a>
+        <a asp-controller="Users" asp-action="Create" class="create-btn">Create New User</a>
     </div>
 </div>

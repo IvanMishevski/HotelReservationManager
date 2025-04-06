@@ -168,7 +168,11 @@
             <input asp-for="FirstName" class="form-control" />
             <span asp-validation-for="FirstName" class="field-validation-error"></span>
         </div>
-
+        <div class="form-group">
+            <label asp-for="MiddleName" class="control-label"></label>
+            <input asp-for="MiddleName" class="form-control" />
+            <span asp-validation-for="MiddleName" class="field-validation-error"></span>
+        </div>
         <div class="form-group">
             <label asp-for="LastName" class="control-label"></label>
             <input asp-for="LastName" class="form-control" />
@@ -180,7 +184,11 @@
             <input asp-for="Email" class="form-control" />
             <span asp-validation-for="Email" class="field-validation-error"></span>
         </div>
-
+        <div class="form-group">
+            <label asp-for="EGN" class="control-label"></label>
+            <input asp-for="EGN" class="form-control" />
+            <span asp-validation-for="EGN" class="field-validation-error"></span>
+        </div>
         <div class="form-group">
             <label asp-for="HireDate" class="control-label"></label>
             <input asp-for="HireDate" class="form-control" />
@@ -188,14 +196,16 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label">
-                <input asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
-            </label>
+            <div class="checkbox">
+                <label>
+                    @Html.CheckBoxFor(m => m.IsActive) @Html.DisplayNameFor(model => model.IsActive)
+                </label>
+            </div>
         </div>
 
         <div class="form-group">
             <a asp-action="Index" class="btn btn-back">Back to List</a>
-            <input type="submit" value="Save" class="btn btn-primary" />
+            <input  type="submit" value="Save" class="btn btn-primary" />
         </div>
     </form>
 </div>

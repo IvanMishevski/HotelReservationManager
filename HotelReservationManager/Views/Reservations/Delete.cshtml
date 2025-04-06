@@ -160,7 +160,7 @@
                 }
             </ul>
 
-            <form asp-action="DeleteConfirmed" method="post">
+            <form asp-route-id="@Model.Id" asp-controller="Reservations" asp-action="DeleteSubmit" method="post">
                 @Html.AntiForgeryToken()
                 <button type="submit" class="btn cancel-btn">Confirm Cancellation</button>
             </form>

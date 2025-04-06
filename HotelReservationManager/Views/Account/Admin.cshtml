@@ -1,0 +1,121 @@
+﻿@model HotelReservationManager.Models.AdminViewModel
+
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: 'Lora', serif;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        background-color: #f4f4f4;
+    }
+
+    .navbar {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 50px;
+        background: rgba(34, 49, 63, 0.9);
+        color: white;
+        z-index: 1000;
+    }
+
+    .navbar a {
+        color: white;
+        text-decoration: none;
+        margin: 0 12px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .navbar a:hover {
+        color: #f39c12;
+    }
+
+    .admin-wrapper {
+        display: flex;
+        justify-content: center;
+        padding-top: 120px; /* достатъчно място под навигацията */
+        min-height: calc(100vh - 120px);
+        box-sizing: border-box;
+    }
+
+    .admin-container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+        width: 500px;
+        text-align: center;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .admin-title {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #2c3e50;
+    }
+
+    .admin-info {
+        text-align: left;
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    .stats {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+
+    .stat-box {
+        background: #f39c12;
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .stat-box:hover {
+        transform: scale(1.1);
+    }
+</style>
+
+<div class="admin-wrapper">
+   <div class="admin-container">
+        <h2 class="admin-title">Admin Dashboard</h2>
+        <div class="admin-info"><strong>First Name:</strong> @Model.FirsName</div>
+        <div class="admin-info"><strong>Last Name:</strong> @Model.LastName</div>
+        <div class="admin-info"><strong>Email:</strong> @Model.Email</div>
+        <div class="admin-info"><strong>Phone:</strong> @Model.PhoneNumber</div>
+        <div class="admin-info"><strong>Role:</strong> Administrator</div>
+
+        <h3>Hotel Statistics</h3>
+        <div class="stats">
+            <div class="stat-box">🏨 Available Rooms: @Model.AvailableRooms</div>
+        </div>
+    </div>
+</div>
